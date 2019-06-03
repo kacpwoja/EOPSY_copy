@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 // 0 means filesize
 #define RW_CHUNK_SIZE 2
@@ -92,7 +94,7 @@ int main(int argc, char** argv)
 		exit(1);
 	}
 
-	out_fd = open(out_file, O_WRONLY | O_CREAT, buf.st_mode);
+	out_fd = open(out_file, O_RDWR | O_CREAT, buf.st_mode);
 	if(in_fd == -1)
 	{
 		perror("Output file open error\n");
@@ -157,4 +159,45 @@ void copy_mm(int fd_from, int fd_to)
 {
 	printf("MM copy\n");
 	printf("%d %d\n", fd_from, fd_to);
+
+	struct stat buf;
+	if(fstat(fd_from, &buf) == -1)
+	{
+		perror("fstat error\n");
+		exit(1);
+	}
+
+	char* buffer_in;
+	char* buffer_out;
+
+	buffer_in = mmap(NULL, buf.st_size, PROT_READ, MAP_SHARED, fd_from, 0);
+	if(buffer_in == (void*) -1)
+	{
+		perror("mmap in error\n");
+		exit(1);
+	}
+	buffer_out = mmap(NULL, buf.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd_to, 0);
+	if(buffer_out == (void*) -1)
+	{
+		perror("mmap out error\n");
+		exit(1);
+	}
+
+	buffer_out = memcpy(buffer_out, buffer_in, buf.st_size);
+	if(buffer_out == (void*) -1)
+	{
+		perror("mcpy error\n");
+		exit(1);
+	}
+
+	if(munmap(buffer_in, buf.st_size) == -1)
+	{
+		perror("munmap in error\n");
+		exit(1);
+	}
+	if(munmap(buffer_out, buf.st_size) == -1)
+	{
+		perror("munmap out error\n");
+		exit(1);
+	}
 }
