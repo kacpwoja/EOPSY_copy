@@ -19,6 +19,8 @@ int main(int argc, char** argv)
 	void (*copy_fun)(int, int);
 	char* in_file;
 	char* out_file;
+	int in_fd;
+	int out_fd;
 	
 	char m_flag = 0;
 	char c;
@@ -73,8 +75,23 @@ int main(int argc, char** argv)
 		copy_fun = &copy_rw;
 	}
 
-	printf("In: %s out: %s\n", in_file, out_file);
-	(*copy_fun)(0,0);
+	in_fd = open(in_file, O_RDONLY);
+	if(in_fd == -1)
+	{
+		perror("Input file open error\n");
+		return 4;
+	}
+	out_fd = open(out_file, O_WRONLY | O_CREAT);
+	if(in_fd == -1)
+	{
+		perror("Output file open error\n");
+		return 4;
+	}
+
+	(*copy_fun)(in_fd, out_fd);
+
+	close(in_fd);
+	close(out_fd);
 		
 	return 0;
 }
@@ -87,9 +104,11 @@ void help()
 void copy_rw(int fd_from, int fd_to)
 {
 	printf("RW copy\n");
+	printf("%d %d\n", fd_from, fd_to);
 }
 
 void copy_mm(int fd_from, int fd_to)
 {
 	printf("MM copy\n");
+	printf("%d %d\n", fd_from, fd_to);
 }
