@@ -157,9 +157,6 @@ void copy_rw(int fd_from, int fd_to)
 
 void copy_mm(int fd_from, int fd_to)
 {
-	printf("MM copy\n");
-	printf("%d %d\n", fd_from, fd_to);
-
 	struct stat buf;
 	if(fstat(fd_from, &buf) == -1)
 	{
@@ -174,6 +171,11 @@ void copy_mm(int fd_from, int fd_to)
 	if(buffer_in == (void*) -1)
 	{
 		perror("mmap in error\n");
+		exit(1);
+	}
+	if(ftruncate(fd_to, buf.st_size))
+	{
+		perror("ftruncate error\n");
 		exit(1);
 	}
 	buffer_out = mmap(NULL, buf.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd_to, 0);
