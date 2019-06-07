@@ -8,11 +8,11 @@ echo "Very small file: (56B)"
 t_start=`date +%N`
 ./copy 'test/file_vsmall' 'test/file_copy_rw'
 t_end=`date +%N`
-runtime_rw=$(($t_end-$t_start))
+runtime_rw=`expr $t_end '-' $t_start`
 t_start=`date +%N`
 ./copy '-m' 'test/file_vsmall' 'test/file_copy_mm'
 t_end=`date +%N`
-runtime_mm=$(($t_end-$t_start))
+runtime_mm=`expr $t_end '-' $t_start`
 echo "Runtime:"
 echo "RW:" $runtime_rw "ns"
 echo "MM:" $runtime_mm "ns"
@@ -27,11 +27,11 @@ echo "Small file: (1.4kB)"
 t_start=`date +%N`
 ./copy 'test/file_small' 'test/file_copy_rw'
 t_end=`date +%N`
-runtime_rw=$(($t_end-$t_start))
+runtime_rw=`expr $t_end '-' $t_start`
 t_start=`date +%N`
 ./copy '-m' 'test/file_small' 'test/file_copy_mm'
 t_end=`date +%N`
-runtime_mm=$(($t_end-$t_start))
+runtime_mm=`expr $t_end '-' $t_start`
 echo "Runtime:"
 echo "RW:" $runtime_rw "ns"
 echo "MM:" $runtime_mm "ns"
@@ -46,11 +46,11 @@ echo "Medium file: (11.2kB)"
 t_start=`date +%N`
 ./copy 'test/file_medium' 'test/file_copy_rw'
 t_end=`date +%N`
-runtime_rw=$(($t_end-$t_start))
+runtime_rw=`expr $t_end '-' $t_start`
 t_start=`date +%N`
 ./copy '-m' 'test/file_medium' 'test/file_copy_mm'
 t_end=`date +%N`
-runtime_mm=$(($t_end-$t_start))
+runtime_mm=`expr $t_end '-' $t_start`
 echo "Runtime:"
 echo "RW:" $runtime_rw "ns"
 echo "MM:" $runtime_mm "ns"
@@ -65,11 +65,11 @@ echo "Big file: (112kB)"
 t_start=`date +%N`
 ./copy 'test/file_big' 'test/file_copy_rw'
 t_end=`date +%N`
-runtime_rw=$(($t_end-$t_start))
+runtime_rw=`expr $t_end '-' $t_start`
 t_start=`date +%N`
 ./copy '-m' 'test/file_big' 'test/file_copy_mm'
 t_end=`date +%N`
-runtime_mm=$(($t_end-$t_start))
+runtime_mm=`expr $t_end '-' $t_start`
 echo "Runtime:"
 echo "RW:" $runtime_rw "ns"
 echo "MM:" $runtime_mm "ns"
@@ -84,11 +84,11 @@ echo "Very big file: (2.9MB)"
 t_start=`date +%N`
 ./copy 'test/file_vbig' 'test/file_copy_rw'
 t_end=`date +%N`
-runtime_rw=$(($t_end-$t_start))
+runtime_rw=`expr $t_end '-' $t_start`
 t_start=`date +%N`
 ./copy '-m' 'test/file_vbig' 'test/file_copy_mm'
 t_end=`date +%N`
-runtime_mm=$(($t_end-$t_start))
+runtime_mm=`expr $t_end '-' $t_start`
 echo "Runtime:"
 echo "RW:" $runtime_rw "ns"
 echo "MM:" $runtime_mm "ns"
