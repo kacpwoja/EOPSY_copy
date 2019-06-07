@@ -97,3 +97,26 @@ sha1sum 'test/file_vbig'
 sha1sum 'test/file_copy_rw'
 sha1sum 'test/file_copy_mm'
 rm 'test/file_copy_rw' 'test/file_copy_mm'
+
+echo "---------------------------"
+echo "Giant file"
+t_start=`date +%s.%N`
+echo $t_start
+./copy 'test/in.dat' 'test/file_copy_rw'
+t_end=`date +%s.%N`
+echo $t_end
+runtime_rw=`echo "$t_end - $t_start" | bc`
+t_start=`date +%s.%N`
+./copy '-m' 'test/in.dat' 'test/file_copy_mm'
+echo $t_start
+t_end=`date +%s.%N`
+echo $t_end
+runtime_mm=`echo "$t_end - $t_start" | bc`
+echo "Runtime:"
+echo "RW:" $runtime_rw "s"
+echo "MM:" $runtime_mm "s"
+echo "Hash sums:"
+sha1sum 'test/in.dat'
+sha1sum 'test/file_copy_rw'
+sha1sum 'test/file_copy_mm'
+rm 'test/file_copy_rw' 'test/file_copy_mm'
