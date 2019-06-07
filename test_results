@@ -1,0 +1,46 @@
+Testing the copy script
+---------------------------
+Very small file: (56B)
+Runtime:
+RW: 12286552 ns
+MM: 28192713 ns
+Hash sums:
+52a67453f24d000d18cae0b92f6a597718058412  test/file_vsmall
+b82e6a776cb980908b2683f9f9125acc674ba3e2  test/file_copy_rw
+52a67453f24d000d18cae0b92f6a597718058412  test/file_copy_mm
+---------------------------
+Small file: (1.4kB)
+Runtime:
+RW: 18394207 ns
+MM: 27980444 ns
+Hash sums:
+55464018d1f6d0d5915c0d06d448cf6683624337  test/file_small
+55464018d1f6d0d5915c0d06d448cf6683624337  test/file_copy_rw
+55464018d1f6d0d5915c0d06d448cf6683624337  test/file_copy_mm
+---------------------------
+Medium file: (11.2kB)
+Runtime:
+RW: 18729994 ns
+MM: 14429347 ns
+Hash sums:
+d095a2f888a84a4da56251d24321396b8dd1d7c1  test/file_medium
+d095a2f888a84a4da56251d24321396b8dd1d7c1  test/file_copy_rw
+d095a2f888a84a4da56251d24321396b8dd1d7c1  test/file_copy_mm
+---------------------------
+Big file: (112kB)
+Runtime:
+RW: 14912432 ns
+MM: 23036994 ns
+Hash sums:
+8b3150861cd0bd85836a05d388e68e4f0b57af70  test/file_big
+8b3150861cd0bd85836a05d388e68e4f0b57af70  test/file_copy_rw
+8b3150861cd0bd85836a05d388e68e4f0b57af70  test/file_copy_mm
+---------------------------
+Very big file: (2.9MB)
+Runtime:
+RW: 54443176 ns
+MM: 169305195 ns
+Hash sums:
+b82e6a776cb980908b2683f9f9125acc674ba3e2  test/file_vbig
+b82e6a776cb980908b2683f9f9125acc674ba3e2  test/file_copy_rw
+b82e6a776cb980908b2683f9f9125acc674ba3e2  test/file_copy_mm
